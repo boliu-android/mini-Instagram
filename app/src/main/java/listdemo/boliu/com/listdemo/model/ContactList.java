@@ -11,7 +11,7 @@ public class ContactList {
 
     @SerializedName("contacts")
     @Expose
-    private List<Contact> contacts = null;
+    private List<Contact> contacts;
 
     public List<Contact> getContacts() {
         return contacts;

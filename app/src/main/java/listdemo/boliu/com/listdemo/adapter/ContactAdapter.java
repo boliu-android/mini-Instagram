@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import listdemo.boliu.com.listdemo.R;
@@ -27,17 +28,27 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
     Context mContext;
     private LayoutInflater mInflater;
 
-    public ContactAdapter(@NonNull Context context, @NonNull List<Contact> objects) {
-        super(context, 0, objects);
+    public ContactAdapter(@NonNull Context context) {
+        super(context, 0);
         mContext = context;
-        mContactList = objects;
+        mContactList = new ArrayList<>();
         mInflater = LayoutInflater.from(context);
+    }
+
+    public void setContacts(List<Contact> list) {
+        mContactList.clear();
+        mContactList.addAll(list);
     }
 
     @Nullable
     @Override
     public Contact getItem(int position) {
         return mContactList.get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return mContactList.size();
     }
 
     @NonNull

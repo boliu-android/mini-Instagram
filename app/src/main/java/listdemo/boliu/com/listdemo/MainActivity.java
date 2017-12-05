@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import listdemo.boliu.com.listdemo.adapter.ContactAdapter;
+import listdemo.boliu.com.listdemo.adapter.ContactListView;
+import listdemo.boliu.com.listdemo.adapter.ContactPresenter;
 import listdemo.boliu.com.listdemo.api.ApiService;
 import listdemo.boliu.com.listdemo.api.RetroClient;
 import listdemo.boliu.com.listdemo.model.Contact;
@@ -22,13 +24,11 @@ import listdemo.boliu.com.listdemo.model.ContactList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements ContactListView, SwipeRefreshLayout.OnRefreshListener {
 
-    List<Contact> contactList;
+    private ContactPresenter mPresenter;
     private View parentView;
-    private ListView listView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ContactAdapter adapter;
 
@@ -37,19 +37,16 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        contactList = new ArrayList<>();
         parentView = findViewById(R.id.parentLayout);
 
-        listView = (ListView) findViewById(R.id.listView);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getBaseContext(),
-                        contactList.get(position).getName() + " => " + contactList.get(position).getPhone().getHome(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getBaseContext(),
+//                        contactList.get(position).getName() + " => " + contactList.get(position).getPhone().getHome(),
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        });
 
         // refresh to load layout
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
@@ -58,55 +55,84 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 android.R.color.holo_green_light, android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
+        // listView
+        ListView listView = (ListView) findViewById(R.id.listView);
+        adapter = new ContactAdapter(MainActivity.this);
+        listView.setAdapter(adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                load();
-            }
-        });
+        // MVP
+        mPresenter = new ContactPresenter();
+        mPresenter.attachView(this);
+        mPresenter.startLoadContacts();
     }
 
     @Override
     public void onRefresh() {
-        load();
+        mPresenter.startLoadContacts();
     }
 
-    private void load() {
-        final ProgressDialog dialog;
-        /**
-         * Progress Dialog for User Interaction
-         */
-        dialog = new ProgressDialog(MainActivity.this);
-        dialog.setTitle("get json");
-        dialog.setMessage("json");
-        dialog.show();
+    @Override
+    public void showLoading() {
 
-        final ApiService apiService = RetroClient.getApiService();
-
-        Call<ContactList> call = apiService.getContectList();
-
-        call.enqueue(new Callback<ContactList>() {
-            @Override
-            public void onResponse(Call<ContactList> call, Response<ContactList> response) {
-                dialog.dismiss();
-
-                if (response.isSuccessful()) {
-                    contactList = response.body().getContacts();
-
-                    adapter = new ContactAdapter(MainActivity.this, contactList);
-                    listView.setAdapter(adapter);
-                } else {
-                    Snackbar.make(parentView,"wrong", Snackbar.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ContactList> call, Throwable t) {
-                dialog.dismiss();
-                Snackbar.make(parentView, "fails", Snackbar.LENGTH_LONG).show();
-            }
-        });
     }
+
+    @Override
+    public void hideLoading() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showError(String msg) {
+        // use snackbar to replace Toast to show Error message
+
+    }
+
+    @Override
+    public void showResult(List<Contact> list) {
+        Snackbar.make(swipeRefreshLayout, "success", Snackbar.LENGTH_SHORT).show();
+        adapter.setContacts(list);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showTitle(String title) {
+
+    }
+
+    //    private void load() {
+//        final ProgressDialog dialog;
+//        /**
+//         * Progress Dialog for User Interaction
+//         */
+//        dialog = new ProgressDialog(MainActivity.this);
+//        dialog.setTitle("get json");
+//        dialog.setMessage("json");
+//        dialog.show();
+//
+//        final ApiService apiService = RetroClient.getApiService();
+//
+//        Call<ContactList> call = apiService.getContactList();
+//
+//        call.enqueue(new Callback<ContactList>() {
+//            @Override
+//            public void onResponse(Call<ContactList> call, Response<ContactList> response) {
+//                dialog.dismiss();
+//
+//                if (response.isSuccessful()) {
+//                    contactList = response.body().getContacts();
+//
+//                    adapter = new ContactAdapter(MainActivity.this, contactList);
+//                    listView.setAdapter(adapter);
+//                } else {
+//                    Snackbar.make(parentView,"wrong", Snackbar.LENGTH_LONG).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ContactList> call, Throwable t) {
+//                dialog.dismiss();
+//                Snackbar.make(parentView, "fails", Snackbar.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 }

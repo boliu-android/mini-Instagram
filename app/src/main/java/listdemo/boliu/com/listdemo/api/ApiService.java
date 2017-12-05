@@ -11,5 +11,5 @@ import retrofit2.http.GET;
 public interface ApiService {
 
     @GET("/json_data.json")
-    Call<ContactList> getContectList();
+    Call<ContactList> getContactList();
 }
