@@ -98,41 +98,4 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
     public void showTitle(String title) {
 
     }
-
-    //    private void load() {
-//        final ProgressDialog dialog;
-//        /**
-//         * Progress Dialog for User Interaction
-//         */
-//        dialog = new ProgressDialog(MainActivity.this);
-//        dialog.setTitle("get json");
-//        dialog.setMessage("json");
-//        dialog.show();
-//
-//        final ApiService apiService = RetroClient.getApiService();
-//
-//        Call<ContactList> call = apiService.getContactList();
-//
-//        call.enqueue(new Callback<ContactList>() {
-//            @Override
-//            public void onResponse(Call<ContactList> call, Response<ContactList> response) {
-//                dialog.dismiss();
-//
-//                if (response.isSuccessful()) {
-//                    contactList = response.body().getContacts();
-//
-//                    adapter = new ContactAdapter(MainActivity.this, contactList);
-//                    listView.setAdapter(adapter);
-//                } else {
-//                    Snackbar.make(parentView,"wrong", Snackbar.LENGTH_LONG).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ContactList> call, Throwable t) {
-//                dialog.dismiss();
-//                Snackbar.make(parentView, "fails", Snackbar.LENGTH_LONG).show();
-//            }
-//        });
-//    }
 }
