@@ -1,29 +1,33 @@
 package listdemo.boliu.com.listdemo;
 
-import android.app.ProgressDialog;
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.List;
 
 import listdemo.boliu.com.listdemo.adapter.ContactAdapter;
 import listdemo.boliu.com.listdemo.adapter.ContactListView;
 import listdemo.boliu.com.listdemo.adapter.ContactPresenter;
-import listdemo.boliu.com.listdemo.api.ApiService;
-import listdemo.boliu.com.listdemo.api.RetroClient;
+import listdemo.boliu.com.listdemo.carmar.CameraUtils;
+import listdemo.boliu.com.listdemo.data.DataUtils;
 import listdemo.boliu.com.listdemo.model.Contact;
-import listdemo.boliu.com.listdemo.model.ContactList;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
+import static listdemo.boliu.com.listdemo.carmar.CameraUtils.REQUEST_IMAGE;
+import static listdemo.boliu.com.listdemo.carmar.CameraUtils.dateToString;
+import static listdemo.boliu.com.listdemo.carmar.CameraUtils.getImageDestination;
 
 public class MainActivity extends AppCompatActivity implements ContactListView, SwipeRefreshLayout.OnRefreshListener {
 
@@ -31,29 +35,15 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
     private View parentView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ContactAdapter adapter;
+    private String mPhotoName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        init();
         parentView = findViewById(R.id.parentLayout);
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getBaseContext(),
-//                        contactList.get(position).getName() + " => " + contactList.get(position).getPhone().getHome(),
-//                        Toast.LENGTH_LONG).show();
-//            }
-//        });
-
-        // refresh to load layout
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light, android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
 
         // listView
         ListView listView = (ListView) findViewById(R.id.listView);
@@ -64,6 +54,26 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
         mPresenter = new ContactPresenter();
         mPresenter.attachView(this);
         mPresenter.startLoadContacts();
+    }
+
+    public void init() {
+        // refresh to load layout
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DataUtils.createFilesFolder();
+                mPhotoName = dateToString(new Date(),"yyyy-MM-dd-hh-mm-ss");
+                startActivity(CameraUtils.getTakePhotoIntent(MainActivity.this, null,null));
+            }
+        });
+
     }
 
     @Override
@@ -98,4 +108,5 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
     public void showTitle(String title) {
 
     }
+
 }
