@@ -1,6 +1,10 @@
 package listdemo.boliu.com.listdemo.data;
 
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 
 import java.io.File;
 
@@ -10,15 +14,17 @@ import java.io.File;
 
 public class DataUtils {
 
-    private static final String FOLDER_PATH = "gym_app_folder";
+    private static final String TAG = "DataUtils";
+    private static final String FOLDER_PATH = "gym_app_folder/";
 
     /**
      * create a folder in external storage directory.
      */
-    public static void createFilesFolder() {
+    public static void createFilesFolder(Activity activity) {
         File f = new File(Environment.getExternalStorageDirectory(), FOLDER_PATH);
         if (!f.exists()) {
-            f.mkdirs();
+            boolean success = f.mkdirs();
+            Log.d(TAG, "create sdcard folder state:" + success);
         }
     }
 

@@ -7,12 +7,20 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Date;
+
+import listdemo.boliu.com.listdemo.MainActivity;
+import listdemo.boliu.com.listdemo.R;
+import listdemo.boliu.com.listdemo.data.DataUtils;
+import listdemo.boliu.com.listdemo.utils.ToastUtils;
 
 import static listdemo.boliu.com.listdemo.carmar.CameraUtils.REQUEST_IMAGE;
+import static listdemo.boliu.com.listdemo.carmar.CameraUtils.dateToString;
 import static listdemo.boliu.com.listdemo.carmar.CameraUtils.getImageDestination;
 
 /**
@@ -20,36 +28,34 @@ import static listdemo.boliu.com.listdemo.carmar.CameraUtils.getImageDestination
  */
 
 public class CameraActivity extends AppCompatActivity {
+    private String mPhotoName;
+    private ImageView mImage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.carmera_activity);
+        mImage = findViewById(R.id.photo);
+
+        DataUtils.createFilesFolder(this);
+        mPhotoName = dateToString(new Date(),"yyyy-MM-dd-hh-mm-ss");
+        startActivityForResult(CameraUtils.getTakePhotoIntent(CameraActivity.this, null,mPhotoName), REQUEST_IMAGE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if( requestCode == REQUEST_IMAGE && resultCode == Activity.RESULT_OK ){
-//            try {
-//                File destination = getImageDestination(mPhotoName);
-//
-//                FileInputStream in = null;
-//                try {
-//                    in = new FileInputStream(destination);
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-//                BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inSampleSize = 10;
-//                String imagePath = destination.getAbsolutePath();
-//                Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
-//                picture.setImageBitmap(bmp);
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//        else{
-//            tvPath.setText("Request cancelled");
-//        }
+        if( requestCode == REQUEST_IMAGE && resultCode == Activity.RESULT_OK ){
+            File destination = getImageDestination(mPhotoName);
+
+            String path = destination.getAbsolutePath();
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 10;
+            Bitmap bmp = BitmapFactory.decodeFile(path);
+            mImage.setImageBitmap(bmp);
+
+        }
+        else{
+            ToastUtils.showToast(this, "photo result fails");
+        }
     }
 }

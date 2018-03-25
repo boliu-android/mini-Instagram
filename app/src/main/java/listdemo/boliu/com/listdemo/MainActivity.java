@@ -1,5 +1,6 @@
 package listdemo.boliu.com.listdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,17 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 
-import java.util.Date;
 import java.util.List;
 
 import listdemo.boliu.com.listdemo.adapter.ContactAdapter;
 import listdemo.boliu.com.listdemo.adapter.ContactListView;
 import listdemo.boliu.com.listdemo.adapter.ContactPresenter;
-import listdemo.boliu.com.listdemo.carmar.CameraUtils;
-import listdemo.boliu.com.listdemo.data.DataUtils;
+import listdemo.boliu.com.listdemo.carmar.CameraActivity;
 import listdemo.boliu.com.listdemo.model.Contact;
-
-import static listdemo.boliu.com.listdemo.carmar.CameraUtils.dateToString;
+import listdemo.boliu.com.listdemo.utils.PermissionUtils;
 
 public class MainActivity extends AppCompatActivity implements ContactListView, SwipeRefreshLayout.OnRefreshListener {
 
@@ -48,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
     }
 
     public void init() {
+        // check permission
+        PermissionUtils.checkPermission(this);
+
         // refresh to load layout
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -55,13 +56,13 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
                 android.R.color.holo_green_light, android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
+        final Intent intent = new Intent(this, CameraActivity.class);
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DataUtils.createFilesFolder();
-                mPhotoName = dateToString(new Date(),"yyyy-MM-dd-hh-mm-ss");
-                startActivity(CameraUtils.getTakePhotoIntent(MainActivity.this, null,null));
+                startActivity(intent);
             }
         });
 
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
 
     @Override
     public void showError(String msg) {
-        // use snackbar to replace Toast to show Error message
+        // use snackbar to replace ToastUtils to show Error message
 
     }
 
