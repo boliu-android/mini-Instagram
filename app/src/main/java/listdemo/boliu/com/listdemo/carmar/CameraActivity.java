@@ -16,7 +16,9 @@ import java.util.Date;
 
 import listdemo.boliu.com.listdemo.MainActivity;
 import listdemo.boliu.com.listdemo.R;
+import listdemo.boliu.com.listdemo.data.ContentResolverHelper;
 import listdemo.boliu.com.listdemo.data.DataUtils;
+import listdemo.boliu.com.listdemo.model.carmera.Photo;
 import listdemo.boliu.com.listdemo.utils.ToastUtils;
 
 import static listdemo.boliu.com.listdemo.carmar.CameraUtils.REQUEST_IMAGE;
@@ -52,6 +54,12 @@ public class CameraActivity extends AppCompatActivity {
             options.inSampleSize = 10;
             Bitmap bmp = BitmapFactory.decodeFile(path);
             mImage.setImageBitmap(bmp);
+
+            Photo photo = new Photo();
+            photo.path = path;
+            photo.data = mPhotoName;
+
+            new ContentResolverHelper(this).insertPhoto(photo);
 
         }
         else{

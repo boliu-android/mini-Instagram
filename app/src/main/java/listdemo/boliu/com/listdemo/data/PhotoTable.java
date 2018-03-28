@@ -21,9 +21,7 @@ public class PhotoTable {
             + "("
             + COLUMN_ID + " integer primary key autoincrement, "
             + COLUMN_DATA + " text not null, "
-            + COLUMN_PATH + " text not null,"
-            + COLUMN_DESCRIPTION
-            + " text not null"
+            + COLUMN_PATH + " text not null "
             + ");";
 
     public static void onCreate(SQLiteDatabase database) {

@@ -91,6 +91,7 @@ public class PhotoContentProvider extends ContentProvider {
         switch (mMatcher.match(uri)) {
             case ITEM:
                 cursor = mDatabase.query(TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                int i = cursor.getCount();
                 break;
             case ITEM_ID:
                 cursor = mDatabase.query(TABLE_NAME, projection, COLUMN_ID + "=" + uri.getLastPathSegment(), selectionArgs, null, null, sortOrder);

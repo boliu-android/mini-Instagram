@@ -16,6 +16,8 @@ import listdemo.boliu.com.listdemo.adapter.ContactListView;
 import listdemo.boliu.com.listdemo.adapter.ContactPresenter;
 import listdemo.boliu.com.listdemo.carmar.CameraActivity;
 import listdemo.boliu.com.listdemo.model.Contact;
+import listdemo.boliu.com.listdemo.model.Phone;
+import listdemo.boliu.com.listdemo.model.carmera.Photo;
 import listdemo.boliu.com.listdemo.utils.PermissionUtils;
 
 public class MainActivity extends AppCompatActivity implements ContactListView, SwipeRefreshLayout.OnRefreshListener {
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
         listView.setAdapter(adapter);
 
         // MVP
-        mPresenter = new ContactPresenter();
+        mPresenter = new ContactPresenter(this);
         mPresenter.attachView(this);
         mPresenter.startLoadContacts();
     }
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
     }
 
     @Override
-    public void showResult(List<Contact> list) {
+    public void showResult(List<Photo> list) {
         Snackbar.make(swipeRefreshLayout, "success", Snackbar.LENGTH_SHORT).show();
         adapter.setContacts(list);
         adapter.notifyDataSetChanged();
