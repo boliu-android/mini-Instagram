@@ -40,7 +40,9 @@ public class ContactAdapter extends ArrayAdapter<Photo> {
 
     public void setContacts(List<Photo> list) {
         mContactList.clear();
-        mContactList.addAll(list);
+        if (list != null) {
+            mContactList.addAll(list);
+        }
     }
 
     @Nullable

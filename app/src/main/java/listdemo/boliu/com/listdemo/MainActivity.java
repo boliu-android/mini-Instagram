@@ -93,9 +93,9 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
 
     @Override
     public void showResult(List<Photo> list) {
-        Snackbar.make(swipeRefreshLayout, "success", Snackbar.LENGTH_SHORT).show();
         adapter.setContacts(list);
         adapter.notifyDataSetChanged();
+        hideLoading();
     }
 
     @Override
