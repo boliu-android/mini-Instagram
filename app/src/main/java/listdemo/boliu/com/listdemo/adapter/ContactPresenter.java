@@ -49,39 +49,39 @@ public class ContactPresenter implements BasePresenter<ContactListView>, LoaderM
     public ContactPresenter(Activity mActivity) {
         this.mActivity = mActivity;
         LoaderManager loaderManager = mActivity.getLoaderManager();
-        loaderManager.initLoader(0, null, this);
+        //loaderManager.initLoader(CURSOR_LOADER_ID, null, this);
     }
 
     public void startLoadContacts() {
-
-        LoaderManager lm = mActivity.getLoaderManager();
-        lm.initLoader(CURSOR_LOADER_ID, null, this);
 
         if (mListView == null) {
             Log.w(TAG, "[startLoadFacts] please attach view first.");
         }
 
-        mListView.showLoading();
+        //mListView.showLoading();
 
         final ApiService apiService = RetroClient.getApiService();
 
         LoaderManager loaderManager = mActivity.getLoaderManager();
-        loaderManager.restartLoader(0, null, this);
+        loaderManager.restartLoader(CURSOR_LOADER_ID, null, this);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        Log.d("BO", "onCreateLoader");
         return new CursorLoader(mActivity, CONTENT_URI,null, null, null, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         mListView.showResult(getPhotoList(cursor));
+        Log.d("BO", "onLoadFinished");
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mListView.showResult(null);
+        Log.d("BO", "onLoadReset");
 
     }
 

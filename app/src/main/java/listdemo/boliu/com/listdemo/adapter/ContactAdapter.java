@@ -72,7 +72,7 @@ public class ContactAdapter extends ArrayAdapter<Photo> {
 
         viewHolder.textViewName.setText(item.data);
 
-        Uri uri = Uri.fromFile(new File(item.path));
+        Uri uri = Uri.parse(item.path);
 
         Picasso.with(mContext)
                 .load(uri)
