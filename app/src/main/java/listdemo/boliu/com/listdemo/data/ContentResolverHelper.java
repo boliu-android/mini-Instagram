@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import listdemo.boliu.com.listdemo.model.carmera.Photo;
 
@@ -26,6 +27,10 @@ public class ContentResolverHelper {
 
     public Uri insertPhoto(Photo photo) {
         return mContext.getContentResolver().insert(CONTENT_URI, convertToContentValues(photo));
+    }
+
+    public int deletePhoto(@NonNull Photo photo) {
+        return mContext.getContentResolver().delete(CONTENT_URI, PhotoTable.COLUMN_PATH + "= ?", new String[] {photo.path});
     }
 
     public Cursor getAllPhotosCursor() {

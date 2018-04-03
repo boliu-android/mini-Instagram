@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import listdemo.boliu.com.listdemo.adapter.ContactAdapter;
 import listdemo.boliu.com.listdemo.adapter.ContactListView;
 import listdemo.boliu.com.listdemo.adapter.ContactPresenter;
 import listdemo.boliu.com.listdemo.carmar.CameraActivity;
+import listdemo.boliu.com.listdemo.data.ContentResolverHelper;
 import listdemo.boliu.com.listdemo.model.Contact;
 import listdemo.boliu.com.listdemo.model.Phone;
 import listdemo.boliu.com.listdemo.model.carmera.Photo;
@@ -38,9 +40,18 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
         parentView = findViewById(R.id.parentLayout);
 
         // listView
-        ListView listView = (ListView) findViewById(R.id.listView);
+        final ListView listView = (ListView) findViewById(R.id.listView);
         adapter = new ContactAdapter(MainActivity.this);
         listView.setAdapter(adapter);
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Photo photo = adapter.getItem(i);
+                new ContentResolverHelper(listView.getContext()).deletePhoto(photo);
+                return false;
+            }
+        });
 
         // MVP
         mPresenter = new ContactPresenter(this);

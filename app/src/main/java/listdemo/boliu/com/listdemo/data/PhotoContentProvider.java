@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.text.TextUtils;
 
 /**
  * Created by boliu on 3/22/18.
@@ -114,6 +115,20 @@ public class PhotoContentProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         // TODO Auto-generated method stub
+        int count;
+        switch (mMatcher.match(uri)) {
+            case ITEM:
+                count = mDatabase.delete(TABLE_NAME, selection, selectionArgs);
+                break;
+            case ITEM_ID:
+                String noteId = uri.getPathSegments().get(1);
+                count = mDatabase.delete(TABLE_NAME, PhotoTable.COLUMN_ID + "=" + noteId + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""), selectionArgs);
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown URI" + uri);
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
         return 0;
     }
 
