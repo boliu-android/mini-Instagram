@@ -12,6 +12,7 @@ public class PhotoTable {
     public static final String TABLE_NAME = "photo";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_DATA = "data";
+    public static final String COLUMN_URI = "uri";
     public static final String COLUMN_PATH = "path";
     public static final String COLUMN_DESCRIPTION = "description";
 
@@ -21,7 +22,8 @@ public class PhotoTable {
             + "("
             + COLUMN_ID + " integer primary key autoincrement, "
             + COLUMN_DATA + " text not null, "
-            + COLUMN_PATH + " text not null "
+            + COLUMN_URI + " text not null, "
+            + COLUMN_PATH + " text not null"
             + ");";
 
     public static void onCreate(SQLiteDatabase database) {

@@ -14,46 +14,44 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import listdemo.boliu.com.listdemo.R;
-import listdemo.boliu.com.listdemo.model.Contact;
 import listdemo.boliu.com.listdemo.model.carmera.Photo;
 
 /**
  * Created by bloiu on 11/28/2017.
  */
 
-public class ContactAdapter extends ArrayAdapter<Photo> {
-    List<Photo> mContactList;
+public class PhotoAdapter extends ArrayAdapter<Photo> {
+    List<Photo> mPhotoList;
     Context mContext;
     private LayoutInflater mInflater;
 
-    public ContactAdapter(@NonNull Context context) {
+    public PhotoAdapter(@NonNull Context context) {
         super(context, 0);
         mContext = context;
-        mContactList = new ArrayList<>();
+        mPhotoList = new ArrayList<>();
         mInflater = LayoutInflater.from(context);
     }
 
     public void setContacts(List<Photo> list) {
-        mContactList.clear();
+        mPhotoList.clear();
         if (list != null) {
-            mContactList.addAll(list);
+            mPhotoList.addAll(list);
         }
     }
 
     @Nullable
     @Override
     public Photo getItem(int position) {
-        return mContactList.get(position);
+        return mPhotoList.get(position);
     }
 
     @Override
     public int getCount() {
-        return mContactList.size();
+        return mPhotoList.size();
     }
 
     @NonNull
@@ -72,7 +70,7 @@ public class ContactAdapter extends ArrayAdapter<Photo> {
 
         viewHolder.textViewName.setText(item.data);
 
-        Uri uri = Uri.parse(item.path);
+        Uri uri = Uri.parse(item.uri);
 
         Picasso.with(mContext)
                 .load(uri)
@@ -80,6 +78,10 @@ public class ContactAdapter extends ArrayAdapter<Photo> {
                 .error(R.mipmap.ic_launcher)
                 .into(viewHolder.imageView);
         return viewHolder.rootView;
+    }
+
+    public List<Photo> getPhotoList() {
+        return mPhotoList;
     }
 
     private static class ViewHolder {

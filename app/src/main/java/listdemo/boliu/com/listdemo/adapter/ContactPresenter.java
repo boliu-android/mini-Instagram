@@ -16,11 +16,7 @@ import listdemo.boliu.com.listdemo.api.ApiService;
 import listdemo.boliu.com.listdemo.api.RetroClient;
 import listdemo.boliu.com.listdemo.data.PhotoTable;
 import listdemo.boliu.com.listdemo.model.Contact;
-import listdemo.boliu.com.listdemo.model.ContactList;
 import listdemo.boliu.com.listdemo.model.carmera.Photo;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static listdemo.boliu.com.listdemo.data.PhotoContentProvider.CONTENT_URI;
 
@@ -89,10 +85,13 @@ public class ContactPresenter implements BasePresenter<ContactListView>, LoaderM
         List<Photo> list = new ArrayList<>();
         while(cursor.moveToNext()) {
             Photo photo = new Photo();
+            int uriColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_URI);
+            String uri = cursor.getString(uriColumnIndex);
             int pathColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_PATH);
             String path = cursor.getString(pathColumnIndex);
             int dataColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_DATA);
             String data = cursor.getString(dataColumnIndex);
+            photo.uri = uri;
             photo.path = path;
             photo.data = data;
             list.add(photo);

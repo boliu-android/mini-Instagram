@@ -11,11 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Date;
 
-import listdemo.boliu.com.listdemo.MainActivity;
 import listdemo.boliu.com.listdemo.R;
 import listdemo.boliu.com.listdemo.data.ContentResolverHelper;
 import listdemo.boliu.com.listdemo.data.DataUtils;
@@ -57,11 +54,11 @@ public class CameraActivity extends AppCompatActivity {
             mImage.setImageBitmap(bmp);
 
             Photo photo = new Photo();
-            photo.path = Uri.fromFile(new File(path)).toString();;
+            photo.path = path;
+            photo.uri = Uri.fromFile(new File(path)).toString();;
             photo.data = mPhotoName;
 
             new ContentResolverHelper(this).insertPhoto(photo);
-
         }
         else{
             ToastUtils.showToast(this, "photo result fails");

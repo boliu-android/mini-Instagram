@@ -30,7 +30,7 @@ public class ContentResolverHelper {
     }
 
     public int deletePhoto(@NonNull Photo photo) {
-        return mContext.getContentResolver().delete(CONTENT_URI, PhotoTable.COLUMN_PATH + "= ?", new String[] {photo.path});
+        return mContext.getContentResolver().delete(CONTENT_URI, PhotoTable.COLUMN_URI + "= ?", new String[] {photo.uri});
     }
 
     public Cursor getAllPhotosCursor() {
@@ -40,6 +40,7 @@ public class ContentResolverHelper {
     public ContentValues convertToContentValues(Photo photo) {
         ContentValues values = new ContentValues();
         values.put(PhotoTable.COLUMN_PATH, photo.path);
+        values.put(PhotoTable.COLUMN_URI, photo.uri);
         values.put(PhotoTable.COLUMN_DATA, photo.data);
         return values;
     }

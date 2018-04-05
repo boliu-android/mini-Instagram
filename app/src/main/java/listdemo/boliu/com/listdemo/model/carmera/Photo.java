@@ -9,6 +9,9 @@ import java.io.Serializable;
 public class Photo implements Serializable {
 
     public String id;
+
+    // URI uri
     public String path;
+    public String uri;
     public String data;
 }
