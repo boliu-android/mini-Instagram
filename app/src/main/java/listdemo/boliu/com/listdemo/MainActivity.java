@@ -18,6 +18,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 import listdemo.boliu.com.listdemo.VideoConvert.AnimatedGifMaker;
+import listdemo.boliu.com.listdemo.VideoConvert.GifShowActivity;
 import listdemo.boliu.com.listdemo.adapter.ContactListView;
 import listdemo.boliu.com.listdemo.adapter.ContactPresenter;
 import listdemo.boliu.com.listdemo.adapter.PhotoAdapter;
@@ -35,6 +38,7 @@ import listdemo.boliu.com.listdemo.data.DataUtils;
 import listdemo.boliu.com.listdemo.model.carmera.Photo;
 import listdemo.boliu.com.listdemo.utils.PermissionUtils;
 
+import static listdemo.boliu.com.listdemo.VideoConvert.GifShowActivity.GIF_PATH;
 import static listdemo.boliu.com.listdemo.carmar.CameraUtils.dateToString;
 
 public class MainActivity extends AppCompatActivity implements ContactListView, SwipeRefreshLayout.OnRefreshListener {
@@ -112,9 +116,11 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
-            case R.id.menu_setting:
+            case R.id.convert:
                 new GifThread("test", adapter.getPhotoList()).start();
                 break;
+            case R.id.showGif:
+                launchShowGifActivity(getGifPath("test"));
         }
         return true;
     }
@@ -151,6 +157,10 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
     @Override
     public void showTitle(String title) {
 
+    }
+
+    private String getGifPath(String name) {
+        return DataUtils.getFilesFolder().toString() + "/Gifs/" + name + ".gif";
     }
 
     private class GifThread extends Thread {
@@ -227,6 +237,12 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
         } catch (Exception e) {
         }
         return b;
+    }
+
+    private void launchShowGifActivity(@NotNull String name) {
+        final Intent intent = new Intent(this, GifShowActivity.class);
+        intent.putExtra(GIF_PATH, name);
+        startActivity(intent);
     }
 
     static class MyInnerHandler extends Handler {

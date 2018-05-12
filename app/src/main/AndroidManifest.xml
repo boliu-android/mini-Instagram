@@ -26,6 +26,9 @@
         <activity android:name=".carmar.CameraActivity">
         </activity>
 
+        <activity android:name=".VideoConvert.GifShowActivity">
+        </activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="listdemo.boliu.com.listdemo.provider"
