@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import listdemo.boliu.com.listdemo.R;
-import listdemo.boliu.com.listdemo.model.carmera.DogInfo;
+import listdemo.boliu.com.listdemo.model.Dog.DogInfo;
 
 /**
- * Created by bloiu on 11/28/2017.
+ * Created by bloiu on 5/13/2017.
  */
 
 public class PhotoAdapter extends ArrayAdapter<DogInfo> {

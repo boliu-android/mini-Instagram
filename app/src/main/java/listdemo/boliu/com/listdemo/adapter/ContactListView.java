@@ -3,10 +3,10 @@ package listdemo.boliu.com.listdemo.adapter;
 import java.util.List;
 
 import listdemo.boliu.com.listdemo.BaseView;
-import listdemo.boliu.com.listdemo.model.carmera.DogInfo;
+import listdemo.boliu.com.listdemo.model.Dog.DogInfo;
 
 /**
- * Created by bloiu on 12/4/2017.
+ * Created by bloiu on 5/13/2017.
  */
 
 public interface ContactListView extends BaseView {
@@ -22,18 +22,21 @@ public interface ContactListView extends BaseView {
 
     /**
      * show error message
+     *
      * @param msg
      */
     void showError(String msg);
 
     /**
      * show list item
+     *
      * @param list
      */
     void showResult(List<DogInfo> list);
 
     /**
      * update action bar title
+     *
      * @param title
      */
     void showTitle(String title);

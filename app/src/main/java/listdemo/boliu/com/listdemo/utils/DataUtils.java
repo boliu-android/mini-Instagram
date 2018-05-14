@@ -1,4 +1,4 @@
-package listdemo.boliu.com.listdemo.data;
+package listdemo.boliu.com.listdemo.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,8 +8,6 @@ import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
-
-import listdemo.boliu.com.listdemo.utils.RealPathUtil;
 
 /**
  * Created by boliu on 3/21/18.

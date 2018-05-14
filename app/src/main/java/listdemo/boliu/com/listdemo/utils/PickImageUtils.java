@@ -1,4 +1,4 @@
-package listdemo.boliu.com.listdemo.carmar;
+package listdemo.boliu.com.listdemo.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,10 +7,10 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 /**
- * Created by boliu on 3/21/18.
+ * Created by boliu on 5/13/18.
  */
 
-public class CameraUtils {
+public class PickImageUtils {
     public static final int REQUEST_IMAGE = 100;
     public static final int PICK_IMAGE = 200;
     public static final String MEDIA_TYPE = "jpg";
@@ -25,18 +25,17 @@ public class CameraUtils {
     public static String getPath(Context context, Uri uri) {
         String result = null;
         String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = context.getContentResolver( ).query( uri, proj, null, null, null );
-        if(cursor != null){
-            if ( cursor.moveToFirst( ) ) {
-                int column_index = cursor.getColumnIndexOrThrow( proj[0] );
-                result = cursor.getString( column_index );
+        Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int column_index = cursor.getColumnIndexOrThrow(proj[0]);
+                result = cursor.getString(column_index);
             }
-            cursor.close( );
+            cursor.close();
         }
-        if(result == null) {
+        if (result == null) {
             result = "Not found";
         }
         return result;
     }
-
 }

@@ -4,11 +4,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by bloiu on 11/28/2017.
+ * Created by bloiu on 5/13/2017.
  */
 
 public class RetroClient {
-    private static final String SERVICE_ENDPOINT = "http://pratikbutani.x10.mx";
+    private static final String SERVICE_ENDPOINT = "http://rover.com";
 
     /**
      * Get Retrofit Instance

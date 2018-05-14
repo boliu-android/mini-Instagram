@@ -23,7 +23,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".carmar.CameraActivity">
+        <activity android:name=".view.CameraActivity">
+        </activity>
+        <activity android:name=".view.DetailsInfoActivity">
         </activity>
 
         <provider

@@ -1,4 +1,4 @@
-package listdemo.boliu.com.listdemo.model.carmera;
+package listdemo.boliu.com.listdemo.model.Dog;
 
 import java.io.Serializable;
 

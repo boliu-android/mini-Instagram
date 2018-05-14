@@ -6,6 +6,7 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -15,22 +16,21 @@ import listdemo.boliu.com.listdemo.BasePresenter;
 import listdemo.boliu.com.listdemo.api.ApiService;
 import listdemo.boliu.com.listdemo.api.RetroClient;
 import listdemo.boliu.com.listdemo.data.PhotoTable;
-import listdemo.boliu.com.listdemo.model.Contact;
-import listdemo.boliu.com.listdemo.model.carmera.DogInfo;
+import listdemo.boliu.com.listdemo.model.Dog.DogInfo;
 
 import static listdemo.boliu.com.listdemo.data.PhotoContentProvider.CONTENT_URI;
 
 /**
- * Created by bloiu on 12/4/2017.
+ * Created by bloiu on 5/13/2017.
  */
 
-public class ContactPresenter implements BasePresenter<ContactListView>, LoaderManager.LoaderCallbacks<Cursor> {
-    private final static String TAG = "ContactPresenter";
+public class DogInfoPresenter implements BasePresenter<ContactListView>, LoaderManager.LoaderCallbacks<Cursor> {
+    private final static String TAG = "DogInfoPresenter";
     private final int CURSOR_LOADER_ID = 1;
 
     private Activity mActivity;
     private ContactListView mListView;
-    private List<Contact> mList = new ArrayList<>();
+    private List<DogInfo> mList = new ArrayList<>();
 
     @Override
     public void attachView(ContactListView view) {
@@ -42,7 +42,7 @@ public class ContactPresenter implements BasePresenter<ContactListView>, LoaderM
 
     }
 
-    public ContactPresenter(Activity mActivity) {
+    public DogInfoPresenter(Activity mActivity) {
         this.mActivity = mActivity;
         LoaderManager loaderManager = mActivity.getLoaderManager();
         //loaderManager.initLoader(CURSOR_LOADER_ID, null, this);
@@ -62,15 +62,31 @@ public class ContactPresenter implements BasePresenter<ContactListView>, LoaderM
         loaderManager.restartLoader(CURSOR_LOADER_ID, null, this);
     }
 
+    public void filterByQuery(String query) {
+        if (!TextUtils.isEmpty(query)) {
+            String str = query.trim().toLowerCase();
+            List<DogInfo> list = new ArrayList<>();
+            for (DogInfo dogInfo : mList) {
+                if (dogInfo.ownerName.contains(str) || dogInfo.dogName.contains(str)) {
+                    list.add(dogInfo);
+                }
+            }
+            mListView.showResult(list);
+        } else {
+            mListView.showResult(mList);
+        }
+    }
+
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         Log.d("BO", "onCreateLoader");
-        return new CursorLoader(mActivity, CONTENT_URI,null, null, null, null);
+        return new CursorLoader(mActivity, CONTENT_URI, null, null, null, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        mListView.showResult(getPhotoList(cursor));
+        mList = getPhotoList(cursor);
+        mListView.showResult(mList);
         Log.d("BO", "onLoadFinished");
     }
 
@@ -97,7 +113,7 @@ public class ContactPresenter implements BasePresenter<ContactListView>, LoaderM
                 dogInfo.dogName = dogName;
                 dogInfo.uri = uri;
                 list.add(dogInfo);
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         return list;
     }

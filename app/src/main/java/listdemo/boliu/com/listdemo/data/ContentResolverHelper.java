@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import listdemo.boliu.com.listdemo.model.carmera.DogInfo;
+import listdemo.boliu.com.listdemo.model.Dog.DogInfo;
 
 import static listdemo.boliu.com.listdemo.data.PhotoContentProvider.CONTENT_URI;
 
