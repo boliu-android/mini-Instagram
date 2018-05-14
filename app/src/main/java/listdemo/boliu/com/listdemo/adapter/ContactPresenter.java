@@ -93,7 +93,7 @@ public class ContactPresenter implements BasePresenter<ContactListView>, LoaderM
                 int dogNameColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_DOG_NAME);
                 String dogName = cursor.getString(dogNameColumnIndex);
                 //dogInfo.uri = uri;
-                dogInfo.OwnerName = owner;
+                dogInfo.ownerName = owner;
                 dogInfo.dogName = dogName;
                 dogInfo.uri = uri;
                 list.add(dogInfo);

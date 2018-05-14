@@ -21,15 +21,17 @@ import listdemo.boliu.com.listdemo.data.DataUtils;
 import listdemo.boliu.com.listdemo.model.carmera.DogInfo;
 import listdemo.boliu.com.listdemo.utils.PermissionUtils;
 
+import static listdemo.boliu.com.listdemo.carmar.DetailsInfoFragment.DOG_NAME;
+import static listdemo.boliu.com.listdemo.carmar.DetailsInfoFragment.IMAGE_PATH;
+import static listdemo.boliu.com.listdemo.carmar.DetailsInfoFragment.OWNER_NAME;
+
 public class MainActivity extends AppCompatActivity implements ContactListView, SwipeRefreshLayout.OnRefreshListener {
 
-    public static final int GIF_CONVERT_MSG = 2;
+
 
     private ContactPresenter mPresenter;
-    private View parentView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private PhotoAdapter adapter;
-    private String mPhotoName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
         setContentView(R.layout.activity_main);
 
         init();
-        parentView = findViewById(R.id.parentLayout);
 
         // listView
         final ListView listView = (ListView) findViewById(R.id.listView);
@@ -52,6 +53,21 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
                 return false;
             }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                            DogInfo dogInfo = adapter.getItem(i);
+                                            final Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString(DOG_NAME, dogInfo.ownerName);
+                                            bundle.putString(OWNER_NAME, dogInfo.dogName);
+                                            bundle.putString(IMAGE_PATH, dogInfo.uri);
+                                            intent.putExtras(bundle);
+                                            MainActivity.this.startActivity(intent);
+                                        }
+                                    }
+        );
 
         // MVP
         mPresenter = new ContactPresenter(this);

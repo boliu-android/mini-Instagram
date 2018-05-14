@@ -1,8 +1,9 @@
 package listdemo.boliu.com.listdemo.model;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 /**
  * Created by bloiu on 11/28/2017.
@@ -20,5 +21,4 @@ public class ContactList {
     public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
     }
-
 }

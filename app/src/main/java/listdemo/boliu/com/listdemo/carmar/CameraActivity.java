@@ -1,14 +1,17 @@
 package listdemo.boliu.com.listdemo.carmar;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,11 +24,14 @@ import java.io.File;
 import listdemo.boliu.com.listdemo.R;
 import listdemo.boliu.com.listdemo.data.ContentResolverHelper;
 import listdemo.boliu.com.listdemo.model.carmera.DogInfo;
-import listdemo.boliu.com.listdemo.utils.RealPathUtil;
 import listdemo.boliu.com.listdemo.utils.ToastUtils;
 
 import static listdemo.boliu.com.listdemo.carmar.CameraUtils.PICK_IMAGE;
 import static listdemo.boliu.com.listdemo.carmar.CameraUtils.getPickImageIntent;
+import static listdemo.boliu.com.listdemo.carmar.DetailsInfoFragment.DOG_NAME;
+import static listdemo.boliu.com.listdemo.carmar.DetailsInfoFragment.IMAGE_PATH;
+import static listdemo.boliu.com.listdemo.carmar.DetailsInfoFragment.OWNER_NAME;
+import static listdemo.boliu.com.listdemo.data.DataUtils.getImageRealPath;
 
 /**
  * Created by boliu on 3/21/18.
@@ -43,7 +49,19 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.carmera_activity);
-        init();
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            Fragment fragment = DetailsInfoFragment.getInstance(bundle.getString(OWNER_NAME),
+                    bundle.getString(DOG_NAME),
+                    bundle.getString(IMAGE_PATH));
+            transaction.replace(R.id.content, fragment);
+            transaction.commit();
+        } else {
+            init();
+        }
     }
 
     @Override
@@ -67,21 +85,14 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
-            final Uri selectedImage = data.getData();
-            // SDK >= 11 && SDK < 19
-            String realPath;
-            if (Build.VERSION.SDK_INT < 19)
-                realPath = RealPathUtil.getRealPathFromURI_API11to18(this, selectedImage);
-                // SDK > 19 (Android 4.4)
-            else
-                realPath = RealPathUtil.getRealPathFromURI_API19(this, selectedImage);
+            String realPath= getImageRealPath(this, data.getData());
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 10;
             Bitmap bmp = BitmapFactory.decodeFile(realPath);
             mImage.setImageBitmap(bmp);
             mPickedImagePath = realPath;
         } else {
-            ToastUtils.showToast(this, "photo result fails");
+            ToastUtils.showToast(this, "result fails");
         }
     }
 
@@ -109,14 +120,24 @@ public class CameraActivity extends AppCompatActivity {
     private void save() {
         // check all vaild.
 
-        DogInfo dogInfo = new DogInfo();
-        dogInfo.imagePath = mPickedImagePath;
-        dogInfo.dogName = mDogNameEdit.getText().toString();
-        dogInfo.OwnerName = mOwnerNameEdit.getText().toString();
-        dogInfo.uri = Uri.fromFile(new File(mPickedImagePath)).toString();;
+        if (isVaild()) {
+            DogInfo dogInfo = new DogInfo();
+            dogInfo.imagePath = mPickedImagePath;
+            dogInfo.dogName = mDogNameEdit.getText().toString();
+            dogInfo.ownerName = mOwnerNameEdit.getText().toString();
+            dogInfo.uri = Uri.fromFile(new File(mPickedImagePath)).toString();;
 
-        new ContentResolverHelper(this).insertInfo(dogInfo);
+            new ContentResolverHelper(this).insertInfo(dogInfo);
 
-        this.finish();
+            this.finish();
+        } else {
+            ToastUtils.showToast(this, "plz check your dog name or owner name or dog photo can not be empty");
+        }
+    }
+
+    public boolean isVaild() {
+        return !TextUtils.isEmpty(mPickedImagePath)
+                && !TextUtils.isEmpty(mDogNameEdit.getText().toString())
+                && !TextUtils.isEmpty(mOwnerNameEdit.getText().toString());
     }
 }

@@ -9,8 +9,7 @@ import java.io.Serializable;
 public class DogInfo implements Serializable {
 
     public String id;
-
-    public String OwnerName;
+    public String ownerName;
     public String dogName;
     public String imagePath;
     public String uri;

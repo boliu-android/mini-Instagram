@@ -41,7 +41,7 @@ public class ContentResolverHelper {
         ContentValues values = new ContentValues();
         //values.put(PhotoTable.COLUMN_IMAGE_PATH, dogInfo.imagePath);
         values.put(PhotoTable.COLUMN_URI, dogInfo.uri);
-        values.put(PhotoTable.COLUMN_OWNER_NAME, dogInfo.OwnerName);
+        values.put(PhotoTable.COLUMN_OWNER_NAME, dogInfo.ownerName);
         values.put(PhotoTable.COLUMN_DOG_NAME, dogInfo.dogName);
         return values;
     }

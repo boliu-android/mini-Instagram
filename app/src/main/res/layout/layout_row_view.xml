@@ -19,15 +19,13 @@
             android:id="@+id/textViewName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:text="TextView"/>
+            android:textAppearance="?android:textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textViewEmail"
+            android:id="@+id/textViewOwnName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:text="TextView"/>
+            android:textAppearance="?android:textAppearanceMedium" />
 
     </LinearLayout>
 

@@ -68,7 +68,8 @@ public class PhotoAdapter extends ArrayAdapter<DogInfo> {
 
         DogInfo item = getItem(position);
 
-        viewHolder.textViewName.setText(item.dogName);
+        viewHolder.textViewName.setText("Dog name: " + item.dogName);
+        viewHolder.textViewOwnerName.setText("Owner name: " + item.ownerName);
 
         Uri uri = Uri.parse(item.uri);
 
@@ -80,28 +81,24 @@ public class PhotoAdapter extends ArrayAdapter<DogInfo> {
         return viewHolder.rootView;
     }
 
-    public List<DogInfo> getPhotoList() {
-        return mDogInfoList;
-    }
-
     private static class ViewHolder {
         public final RelativeLayout rootView;
         public final ImageView imageView;
         public final TextView textViewName;
-        public final TextView textViewEmail;
+        public final TextView textViewOwnerName;
 
-        private ViewHolder(RelativeLayout rootView, ImageView imageView, TextView textViewName, TextView textViewEmail) {
+        private ViewHolder(RelativeLayout rootView, ImageView imageView, TextView textViewName, TextView textViewOwnerName) {
             this.rootView = rootView;
             this.imageView = imageView;
             this.textViewName = textViewName;
-            this.textViewEmail = textViewEmail;
+            this.textViewOwnerName = textViewOwnerName;
         }
 
         public static ViewHolder create(RelativeLayout rootView) {
-            ImageView imageView = (ImageView) rootView.findViewById(R.id.imageView);
-            TextView textViewName = (TextView) rootView.findViewById(R.id.textViewName);
-            TextView textViewEmail = (TextView) rootView.findViewById(R.id.textViewEmail);
-            return new ViewHolder(rootView, imageView, textViewName, textViewEmail);
+            ImageView imageView = rootView.findViewById(R.id.imageView);
+            TextView textViewName = rootView.findViewById(R.id.textViewName);
+            TextView owner = rootView.findViewById(R.id.textViewOwnName);
+            return new ViewHolder(rootView, imageView, textViewName, owner);
         }
     }
 }
