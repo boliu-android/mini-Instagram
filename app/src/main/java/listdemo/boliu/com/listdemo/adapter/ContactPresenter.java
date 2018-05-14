@@ -16,7 +16,7 @@ import listdemo.boliu.com.listdemo.api.ApiService;
 import listdemo.boliu.com.listdemo.api.RetroClient;
 import listdemo.boliu.com.listdemo.data.PhotoTable;
 import listdemo.boliu.com.listdemo.model.Contact;
-import listdemo.boliu.com.listdemo.model.carmera.Photo;
+import listdemo.boliu.com.listdemo.model.carmera.DogInfo;
 
 import static listdemo.boliu.com.listdemo.data.PhotoContentProvider.CONTENT_URI;
 
@@ -82,19 +82,24 @@ public class ContactPresenter implements BasePresenter<ContactListView>, LoaderM
     }
 
     List getPhotoList(Cursor cursor) {
-        List<Photo> list = new ArrayList<>();
-        while(cursor.moveToNext()) {
-            Photo photo = new Photo();
-            int uriColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_URI);
-            String uri = cursor.getString(uriColumnIndex);
-            int pathColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_PATH);
-            String path = cursor.getString(pathColumnIndex);
-            int dataColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_DATA);
-            String data = cursor.getString(dataColumnIndex);
-            photo.uri = uri;
-            photo.path = path;
-            photo.data = data;
-            list.add(photo);
+        List<DogInfo> list = new ArrayList<>();
+        if (cursor != null && cursor.moveToFirst()) {
+            while(cursor.moveToNext()) {
+                DogInfo dogInfo = new DogInfo();
+                int uriColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_URI);
+                String uri = cursor.getString(uriColumnIndex);
+                int pathColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_IMAGE_PATH);
+                String path = cursor.getString(pathColumnIndex);
+                int ownerColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_OWNER_NAME);
+                String owner = cursor.getString(ownerColumnIndex);
+                int dogNameColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_DOG_NAME);
+                String dogName = cursor.getString(dogNameColumnIndex);
+                //dogInfo.uri = uri;
+                dogInfo.OwnerName = owner;
+                dogInfo.imagePath = path;
+                dogInfo.dogName = dogName;
+                list.add(dogInfo);
+            }
         }
         return list;
     }

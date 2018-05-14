@@ -6,12 +6,12 @@ import java.io.Serializable;
  * Created by boliu on 3/25/18.
  */
 
-public class Photo implements Serializable {
+public class DogInfo implements Serializable {
 
     public String id;
 
-    // URI uri
-    public String path;
+    public String OwnerName;
+    public String dogName;
+    public String imagePath;
     public String uri;
-    public String data;
 }

@@ -3,9 +3,7 @@ package listdemo.boliu.com.listdemo.adapter;
 import java.util.List;
 
 import listdemo.boliu.com.listdemo.BaseView;
-import listdemo.boliu.com.listdemo.model.Contact;
-import listdemo.boliu.com.listdemo.model.Phone;
-import listdemo.boliu.com.listdemo.model.carmera.Photo;
+import listdemo.boliu.com.listdemo.model.carmera.DogInfo;
 
 /**
  * Created by bloiu on 12/4/2017.
@@ -32,7 +30,7 @@ public interface ContactListView extends BaseView {
      * show list item
      * @param list
      */
-    void showResult(List<Photo> list);
+    void showResult(List<DogInfo> list);
 
     /**
      * update action bar title

@@ -11,19 +11,20 @@ public class PhotoTable {
     // Database table
     public static final String TABLE_NAME = "photo";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_DATA = "data";
+    public static final String COLUMN_OWNER_NAME = "ownerName";
+    public static final String COLUMN_DOG_NAME = "dogName";
     public static final String COLUMN_URI = "uri";
-    public static final String COLUMN_PATH = "path";
-    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_IMAGE_PATH = "path";
 
     // Database creation SQL statement
     private static final String DATABASE_CREATE = "create table "
             + TABLE_NAME
             + "("
             + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_DATA + " text not null, "
-            + COLUMN_URI + " text not null, "
-            + COLUMN_PATH + " text not null"
+            + COLUMN_OWNER_NAME + " text, "
+            + COLUMN_DOG_NAME + " text, "
+            + COLUMN_URI + " text, "
+            + COLUMN_IMAGE_PATH + "text"
             + ");";
 
     public static void onCreate(SQLiteDatabase database) {

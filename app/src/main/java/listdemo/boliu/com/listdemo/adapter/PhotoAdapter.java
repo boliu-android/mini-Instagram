@@ -18,40 +18,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 import listdemo.boliu.com.listdemo.R;
-import listdemo.boliu.com.listdemo.model.carmera.Photo;
+import listdemo.boliu.com.listdemo.model.carmera.DogInfo;
 
 /**
  * Created by bloiu on 11/28/2017.
  */
 
-public class PhotoAdapter extends ArrayAdapter<Photo> {
-    List<Photo> mPhotoList;
+public class PhotoAdapter extends ArrayAdapter<DogInfo> {
+    List<DogInfo> mDogInfoList;
     Context mContext;
     private LayoutInflater mInflater;
 
     public PhotoAdapter(@NonNull Context context) {
         super(context, 0);
         mContext = context;
-        mPhotoList = new ArrayList<>();
+        mDogInfoList = new ArrayList<>();
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setContacts(List<Photo> list) {
-        mPhotoList.clear();
+    public void setContacts(List<DogInfo> list) {
+        mDogInfoList.clear();
         if (list != null) {
-            mPhotoList.addAll(list);
+            mDogInfoList.addAll(list);
         }
     }
 
     @Nullable
     @Override
-    public Photo getItem(int position) {
-        return mPhotoList.get(position);
+    public DogInfo getItem(int position) {
+        return mDogInfoList.get(position);
     }
 
     @Override
     public int getCount() {
-        return mPhotoList.size();
+        return mDogInfoList.size();
     }
 
     @NonNull
@@ -66,9 +66,9 @@ public class PhotoAdapter extends ArrayAdapter<Photo> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Photo item = getItem(position);
+        DogInfo item = getItem(position);
 
-        viewHolder.textViewName.setText(item.data);
+        viewHolder.textViewName.setText(item.dogName);
 
         Uri uri = Uri.parse(item.uri);
 
@@ -80,8 +80,8 @@ public class PhotoAdapter extends ArrayAdapter<Photo> {
         return viewHolder.rootView;
     }
 
-    public List<Photo> getPhotoList() {
-        return mPhotoList;
+    public List<DogInfo> getPhotoList() {
+        return mDogInfoList;
     }
 
     private static class ViewHolder {

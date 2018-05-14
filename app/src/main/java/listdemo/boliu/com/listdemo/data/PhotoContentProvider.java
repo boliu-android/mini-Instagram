@@ -20,16 +20,9 @@ public class PhotoContentProvider extends ContentProvider {
     private PhotoDataBaseHelper mHelper;
     private SQLiteDatabase mDatabase;
     private static final String TABLE_NAME = PhotoTable.TABLE_NAME;
-
-    private static final int TODOS = 10;
-    private static final int TODO_ID = 20;
-
     private static final String AUTHORITY = "listdemo.boliu.com.listdemo.photos.contentprovider";
 
-
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "name";
-
 
     public static final int ITEM = 1;
     public static final int ITEM_ID = 2;

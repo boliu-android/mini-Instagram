@@ -41,7 +41,7 @@
 
         <provider
             android:name=".data.PhotoContentProvider"
-            android:authorities="listdemo.boliu.com.listdemo.photos.contentprovider">
+            android:authorities="listdemo.boliu.com.listdemo.dogInfos.contentprovider">
         </provider>
 
     </application>
