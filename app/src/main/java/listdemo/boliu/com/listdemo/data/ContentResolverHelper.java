@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 
 import listdemo.boliu.com.listdemo.model.Dog.DogInfo;
 
-import static listdemo.boliu.com.listdemo.data.PhotoContentProvider.CONTENT_URI;
+import static listdemo.boliu.com.listdemo.data.DogContentProvider.CONTENT_URI;
 
 /**
  * Created by boliu on 3/25/18.
@@ -30,7 +30,7 @@ public class ContentResolverHelper {
     }
 
     public int deleteInfo(@NonNull DogInfo dogInfo) {
-        return mContext.getContentResolver().delete(CONTENT_URI, PhotoTable.COLUMN_URI + "= ?", new String[] {dogInfo.uri});
+        return mContext.getContentResolver().delete(CONTENT_URI, DogTable.COLUMN_URI + "= ?", new String[] {dogInfo.uri});
     }
 
     public Cursor getAllPhotosCursor() {
@@ -39,10 +39,10 @@ public class ContentResolverHelper {
 
     public ContentValues convertToContentValues(DogInfo dogInfo) {
         ContentValues values = new ContentValues();
-        //values.put(PhotoTable.COLUMN_IMAGE_PATH, dogInfo.imagePath);
-        values.put(PhotoTable.COLUMN_URI, dogInfo.uri);
-        values.put(PhotoTable.COLUMN_OWNER_NAME, dogInfo.ownerName);
-        values.put(PhotoTable.COLUMN_DOG_NAME, dogInfo.dogName);
+        //values.put(DogTable.COLUMN_IMAGE_PATH, dogInfo.imagePath);
+        values.put(DogTable.COLUMN_URI, dogInfo.uri);
+        values.put(DogTable.COLUMN_OWNER_NAME, dogInfo.ownerName);
+        values.put(DogTable.COLUMN_DOG_NAME, dogInfo.dogName);
         return values;
     }
 }

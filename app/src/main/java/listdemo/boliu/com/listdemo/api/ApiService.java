@@ -5,5 +5,5 @@ package listdemo.boliu.com.listdemo.api;
  */
 
 public interface ApiService {
-
+    //our MVP architecture can easy extent fetch data from server and loading to list view
 }

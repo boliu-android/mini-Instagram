@@ -1,38 +1,20 @@
 package listdemo.boliu.com.listdemo.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
-import android.util.Log;
-
-import java.io.File;
 
 /**
  * Created by bloiu on 5/13/2017.
  */
 
 public class DataUtils {
-
-    private static final String TAG = "DataUtils";
-    private static final String FOLDER_PATH = "gym_app_folder/";
-
     /**
-     * create a folder in external storage directory.
+     * get image real path
+     * @param context
+     * @param uri
+     * @return
      */
-    public static void createFilesFolder(Activity activity) {
-        File f = new File(Environment.getExternalStorageDirectory(), FOLDER_PATH);
-        if (!f.exists()) {
-            boolean success = f.mkdirs();
-            Log.d(TAG, "create sdcard folder state:" + success);
-        }
-    }
-
-    public static File getFilesFolder() {
-        return new File(Environment.getExternalStorageDirectory(), FOLDER_PATH);
-    }
-
     public static String getImageRealPath(Context context, Uri uri) {
         if (Build.VERSION.SDK_INT < 19)
             return RealPathUtil.getRealPathFromURI_API11to18(context, uri);

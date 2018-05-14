@@ -18,7 +18,7 @@ import java.util.List;
 import listdemo.boliu.com.listdemo.adapter.DogInfoListView;
 import listdemo.boliu.com.listdemo.adapter.DogInfoPresenter;
 import listdemo.boliu.com.listdemo.adapter.DogAdapter;
-import listdemo.boliu.com.listdemo.view.CameraActivity;
+import listdemo.boliu.com.listdemo.view.EditDogInfoActivity;
 import listdemo.boliu.com.listdemo.view.DetailsInfoActivity;
 import listdemo.boliu.com.listdemo.data.ContentResolverHelper;
 import listdemo.boliu.com.listdemo.model.Dog.DogInfo;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements DogInfoListView, 
         // MVP
         mPresenter = new DogInfoPresenter(this);
         mPresenter.attachView(this);
-        mPresenter.startLoadContacts();
+        mPresenter.startLoadInfos();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements DogInfoListView, 
 
     @Override
     public void onRefresh() {
-        mPresenter.startLoadContacts();
+        mPresenter.startLoadInfos();
     }
 
     @Override
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements DogInfoListView, 
                 android.R.color.holo_green_light, android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        final Intent intent = new Intent(this, CameraActivity.class);
+        final Intent intent = new Intent(this, EditDogInfoActivity.class);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

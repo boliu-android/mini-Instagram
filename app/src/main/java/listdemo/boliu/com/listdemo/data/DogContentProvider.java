@@ -14,12 +14,12 @@ import android.text.TextUtils;
  * Created by boliu on 3/22/18.
  */
 
-public class PhotoContentProvider extends ContentProvider {
+public class DogContentProvider extends ContentProvider {
 
     // database
-    private PhotoDataBaseHelper mHelper;
+    private DogDataBaseHelper mHelper;
     private SQLiteDatabase mDatabase;
-    private static final String TABLE_NAME = PhotoTable.TABLE_NAME;
+    private static final String TABLE_NAME = DogTable.TABLE_NAME;
     private static final String AUTHORITY = "listdemo.boliu.com.listdemo.dogInfos.contentprovider";
 
     public static final String COLUMN_ID = "_id";
@@ -42,7 +42,7 @@ public class PhotoContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mHelper = new PhotoDataBaseHelper(getContext());
+        mHelper = new DogDataBaseHelper(getContext());
         mDatabase = mHelper.getWritableDatabase();
         return false;
     }
@@ -108,14 +108,13 @@ public class PhotoContentProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         // TODO Auto-generated method stub
-        int count;
         switch (mMatcher.match(uri)) {
             case ITEM:
-                count = mDatabase.delete(TABLE_NAME, selection, selectionArgs);
+                mDatabase.delete(TABLE_NAME, selection, selectionArgs);
                 break;
             case ITEM_ID:
                 String noteId = uri.getPathSegments().get(1);
-                count = mDatabase.delete(TABLE_NAME, PhotoTable.COLUMN_ID + "=" + noteId + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""), selectionArgs);
+                mDatabase.delete(TABLE_NAME, DogTable.COLUMN_ID + "=" + noteId + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""), selectionArgs);
                 break;
 
             default:
@@ -124,5 +123,4 @@ public class PhotoContentProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(uri, null);
         return 0;
     }
-
 }

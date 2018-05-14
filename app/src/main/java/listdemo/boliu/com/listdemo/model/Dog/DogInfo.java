@@ -13,4 +13,11 @@ public class DogInfo implements Serializable {
     public String dogName;
     public String imagePath;
     public String uri;
+
+    public DogInfo() {}
+
+    public DogInfo(String ownerName, String dogName) {
+        this.ownerName = ownerName;
+        this.dogName = dogName;
+    }
 }

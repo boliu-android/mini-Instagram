@@ -13,12 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import listdemo.boliu.com.listdemo.BasePresenter;
-import listdemo.boliu.com.listdemo.api.ApiService;
-import listdemo.boliu.com.listdemo.api.RetroClient;
-import listdemo.boliu.com.listdemo.data.PhotoTable;
+import listdemo.boliu.com.listdemo.data.DogTable;
 import listdemo.boliu.com.listdemo.model.Dog.DogInfo;
 
-import static listdemo.boliu.com.listdemo.data.PhotoContentProvider.CONTENT_URI;
+import static listdemo.boliu.com.listdemo.data.DogContentProvider.CONTENT_URI;
 
 /**
  * Created by bloiu on 5/13/2017.
@@ -44,36 +42,33 @@ public class DogInfoPresenter implements BasePresenter<DogInfoListView>, LoaderM
 
     public DogInfoPresenter(Activity mActivity) {
         this.mActivity = mActivity;
-        LoaderManager loaderManager = mActivity.getLoaderManager();
-        //loaderManager.initLoader(CURSOR_LOADER_ID, null, this);
     }
 
-    public void startLoadContacts() {
+    public void startLoadInfos() {
 
         if (mListView == null) {
             Log.w(TAG, "[startLoadFacts] please attach view first.");
         }
-
-        //mListView.showLoading();
-
-        final ApiService apiService = RetroClient.getApiService();
-
         LoaderManager loaderManager = mActivity.getLoaderManager();
         loaderManager.restartLoader(CURSOR_LOADER_ID, null, this);
     }
 
     public void filterByQuery(String query) {
+        mListView.showResult(getListAfterFilter(query));
+    }
+
+    public List<DogInfo> getListAfterFilter(String query) {
         if (!TextUtils.isEmpty(query)) {
             String str = query.trim().toLowerCase();
             List<DogInfo> list = new ArrayList<>();
             for (DogInfo dogInfo : mList) {
-                if (dogInfo.ownerName.contains(str) || dogInfo.dogName.contains(str)) {
+                if (dogInfo.ownerName.toLowerCase().contains(str) || dogInfo.dogName.toLowerCase().contains(str)) {
                     list.add(dogInfo);
                 }
             }
-            mListView.showResult(list);
+            return list;
         } else {
-            mListView.showResult(mList);
+            return mList;
         }
     }
 
@@ -85,7 +80,7 @@ public class DogInfoPresenter implements BasePresenter<DogInfoListView>, LoaderM
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        mList = getPhotoList(cursor);
+        mList = getDogInfoList(cursor);
         mListView.showResult(mList);
         Log.d("BO", "onLoadFinished");
     }
@@ -97,18 +92,17 @@ public class DogInfoPresenter implements BasePresenter<DogInfoListView>, LoaderM
 
     }
 
-    List getPhotoList(Cursor cursor) {
+    private List getDogInfoList(Cursor cursor) {
         List<DogInfo> list = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 DogInfo dogInfo = new DogInfo();
-                int uriColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_URI);
+                int uriColumnIndex = cursor.getColumnIndex(DogTable.COLUMN_URI);
                 String uri = cursor.getString(uriColumnIndex);
-                int ownerColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_OWNER_NAME);
+                int ownerColumnIndex = cursor.getColumnIndex(DogTable.COLUMN_OWNER_NAME);
                 String owner = cursor.getString(ownerColumnIndex);
-                int dogNameColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_DOG_NAME);
+                int dogNameColumnIndex = cursor.getColumnIndex(DogTable.COLUMN_DOG_NAME);
                 String dogName = cursor.getString(dogNameColumnIndex);
-                //dogInfo.uri = uri;
                 dogInfo.ownerName = owner;
                 dogInfo.dogName = dogName;
                 dogInfo.uri = uri;
@@ -116,5 +110,13 @@ public class DogInfoPresenter implements BasePresenter<DogInfoListView>, LoaderM
             } while (cursor.moveToNext());
         }
         return list;
+    }
+
+    public List<DogInfo> getList() {
+        return mList;
+    }
+
+    public void setList(List<DogInfo> mList) {
+        this.mList = mList;
     }
 }

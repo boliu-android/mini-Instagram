@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.CameraActivity">
+        <activity android:name=".view.EditDogInfoActivity">
         </activity>
         <activity android:name=".view.DetailsInfoActivity">
         </activity>
@@ -39,7 +39,7 @@
         </provider>
 
         <provider
-            android:name=".data.PhotoContentProvider"
+            android:name=".data.DogContentProvider"
             android:authorities="listdemo.boliu.com.listdemo.dogInfos.contentprovider">
         </provider>
 

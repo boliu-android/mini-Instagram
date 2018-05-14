@@ -7,9 +7,9 @@ import android.util.Log;
  * Created by boliu on 3/22/18.
  */
 
-public class PhotoTable {
+public class DogTable {
     // Database table
-    public static final String TABLE_NAME = "photo";
+    public static final String TABLE_NAME = "doginfo";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_OWNER_NAME = "ownerName";
     public static final String COLUMN_DOG_NAME = "dogName";
@@ -32,7 +32,7 @@ public class PhotoTable {
 
     public static void onUpgrade(SQLiteDatabase database, int oldVersion,
                                  int newVersion) {
-        Log.d(PhotoTable.class.getName(), "Upgrading database from version "
+        Log.d(DogTable.class.getName(), "Upgrading database from version "
                 + oldVersion + " to " + newVersion
                 + ", which will destroy all old data");
         database.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);

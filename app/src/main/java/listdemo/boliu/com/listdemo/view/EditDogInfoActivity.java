@@ -31,7 +31,7 @@ import static listdemo.boliu.com.listdemo.utils.DataUtils.getImageRealPath;
  * Created by boliu on 5/13/18.
  */
 
-public class CameraActivity extends AppCompatActivity {
+public class EditDogInfoActivity extends AppCompatActivity {
     private ImageView mImage;
     private EditText mOwnerNameEdit;
     private EditText mDogNameEdit;
@@ -42,7 +42,7 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.carmera_activity);
+        setContentView(R.layout.edit_doginfo_activity);
         init();
     }
 
