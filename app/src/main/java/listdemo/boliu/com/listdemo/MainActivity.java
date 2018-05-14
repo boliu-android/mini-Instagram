@@ -15,9 +15,9 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import listdemo.boliu.com.listdemo.adapter.ContactListView;
+import listdemo.boliu.com.listdemo.adapter.DogInfoListView;
 import listdemo.boliu.com.listdemo.adapter.DogInfoPresenter;
-import listdemo.boliu.com.listdemo.adapter.PhotoAdapter;
+import listdemo.boliu.com.listdemo.adapter.DogAdapter;
 import listdemo.boliu.com.listdemo.view.CameraActivity;
 import listdemo.boliu.com.listdemo.view.DetailsInfoActivity;
 import listdemo.boliu.com.listdemo.data.ContentResolverHelper;
@@ -28,10 +28,14 @@ import static listdemo.boliu.com.listdemo.view.DetailsInfoActivity.DOG_NAME;
 import static listdemo.boliu.com.listdemo.view.DetailsInfoActivity.IMAGE_PATH;
 import static listdemo.boliu.com.listdemo.view.DetailsInfoActivity.OWNER_NAME;
 
-public class MainActivity extends AppCompatActivity implements ContactListView, SwipeRefreshLayout.OnRefreshListener {
+/**
+ * Created by bloiu on 5/13/2017.
+ */
+
+public class MainActivity extends AppCompatActivity implements DogInfoListView, SwipeRefreshLayout.OnRefreshListener {
     private DogInfoPresenter mPresenter;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private PhotoAdapter adapter;
+    private DogAdapter adapter;
     private ListView mListView;
     private SearchView mSearchView;
 
@@ -127,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements ContactListView, 
 
         // listView
         mListView = findViewById(R.id.listView);
-        adapter = new PhotoAdapter(MainActivity.this);
+        adapter = new DogAdapter(MainActivity.this);
         mListView.setAdapter(adapter);
 
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

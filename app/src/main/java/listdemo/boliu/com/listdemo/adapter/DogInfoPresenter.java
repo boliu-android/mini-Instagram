@@ -24,21 +24,21 @@ import static listdemo.boliu.com.listdemo.data.PhotoContentProvider.CONTENT_URI;
  * Created by bloiu on 5/13/2017.
  */
 
-public class DogInfoPresenter implements BasePresenter<ContactListView>, LoaderManager.LoaderCallbacks<Cursor> {
+public class DogInfoPresenter implements BasePresenter<DogInfoListView>, LoaderManager.LoaderCallbacks<Cursor> {
     private final static String TAG = "DogInfoPresenter";
     private final int CURSOR_LOADER_ID = 1;
 
     private Activity mActivity;
-    private ContactListView mListView;
+    private DogInfoListView mListView;
     private List<DogInfo> mList = new ArrayList<>();
 
     @Override
-    public void attachView(ContactListView view) {
+    public void attachView(DogInfoListView view) {
         mListView = view;
     }
 
     @Override
-    public void detachView(ContactListView view) {
+    public void detachView(DogInfoListView view) {
 
     }
 

@@ -9,7 +9,7 @@ import listdemo.boliu.com.listdemo.model.Dog.DogInfo;
  * Created by bloiu on 5/13/2017.
  */
 
-public interface ContactListView extends BaseView {
+public interface DogInfoListView extends BaseView {
     /**
      * show loading view
      */

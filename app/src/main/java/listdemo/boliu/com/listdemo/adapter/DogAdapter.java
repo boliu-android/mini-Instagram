@@ -24,12 +24,12 @@ import listdemo.boliu.com.listdemo.model.Dog.DogInfo;
  * Created by bloiu on 5/13/2017.
  */
 
-public class PhotoAdapter extends ArrayAdapter<DogInfo> {
+public class DogAdapter extends ArrayAdapter<DogInfo> {
     List<DogInfo> mDogInfoList;
     Context mContext;
     private LayoutInflater mInflater;
 
-    public PhotoAdapter(@NonNull Context context) {
+    public DogAdapter(@NonNull Context context) {
         super(context, 0);
         mContext = context;
         mDogInfoList = new ArrayList<>();
