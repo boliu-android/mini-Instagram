@@ -32,7 +32,6 @@ import static listdemo.boliu.com.listdemo.carmar.CameraUtils.getPickImageIntent;
  */
 
 public class CameraActivity extends AppCompatActivity {
-    private String mPhotoName;
     private ImageView mImage;
     private EditText mOwnerNameEdit;
     private EditText mDogNameEdit;
@@ -61,7 +60,6 @@ public class CameraActivity extends AppCompatActivity {
             case R.id.save:
                 save();
                 break;
-            case R.id.showGif:
         }
         return true;
     }
@@ -102,7 +100,8 @@ public class CameraActivity extends AppCompatActivity {
         mDeleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mPickedImagePath = null;
+                mImage.setImageDrawable(null);
             }
         });
     }

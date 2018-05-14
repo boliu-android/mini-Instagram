@@ -20,7 +20,7 @@ public class PhotoContentProvider extends ContentProvider {
     private PhotoDataBaseHelper mHelper;
     private SQLiteDatabase mDatabase;
     private static final String TABLE_NAME = PhotoTable.TABLE_NAME;
-    private static final String AUTHORITY = "listdemo.boliu.com.listdemo.photos.contentprovider";
+    private static final String AUTHORITY = "listdemo.boliu.com.listdemo.dogInfos.contentprovider";
 
     public static final String COLUMN_ID = "_id";
 
@@ -56,7 +56,7 @@ public class PhotoContentProvider extends ContentProvider {
             case ITEM_ID:
                 return CONTENT_ITEM_TYPE;
             default:
-                throw new IllegalArgumentException("Unknown URI" + uri);
+                throw new IllegalArgumentException("Unknown URI1" + uri);
         }
     }
 
@@ -65,7 +65,7 @@ public class PhotoContentProvider extends ContentProvider {
         // TODO Auto-generated method stub
         long rowId;
         if (mMatcher.match(uri) != ITEM) {
-            throw new IllegalArgumentException("Unknown URI" + uri);
+            throw new IllegalArgumentException("Unknown URI2" + uri);
         }
         rowId = mDatabase.insert(TABLE_NAME, null, values);
         if (rowId > 0) {

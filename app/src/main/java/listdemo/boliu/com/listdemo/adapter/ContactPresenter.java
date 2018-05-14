@@ -84,22 +84,20 @@ public class ContactPresenter implements BasePresenter<ContactListView>, LoaderM
     List getPhotoList(Cursor cursor) {
         List<DogInfo> list = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
-            while(cursor.moveToNext()) {
+            do {
                 DogInfo dogInfo = new DogInfo();
                 int uriColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_URI);
                 String uri = cursor.getString(uriColumnIndex);
-                int pathColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_IMAGE_PATH);
-                String path = cursor.getString(pathColumnIndex);
                 int ownerColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_OWNER_NAME);
                 String owner = cursor.getString(ownerColumnIndex);
                 int dogNameColumnIndex = cursor.getColumnIndex(PhotoTable.COLUMN_DOG_NAME);
                 String dogName = cursor.getString(dogNameColumnIndex);
                 //dogInfo.uri = uri;
                 dogInfo.OwnerName = owner;
-                dogInfo.imagePath = path;
                 dogInfo.dogName = dogName;
+                dogInfo.uri = uri;
                 list.add(dogInfo);
-            }
+            } while(cursor.moveToNext());
         }
         return list;
     }

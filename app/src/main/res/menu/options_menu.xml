@@ -2,10 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/save"
-        android:title="Convert">
-    </item>
-    <item
-        android:id="@+id/showGif"
-        android:title="Show GIF">
+        android:title="Save">
     </item>
 </menu>
